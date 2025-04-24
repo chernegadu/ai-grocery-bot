@@ -8,7 +8,7 @@ from fpdf import FPDF
 # === 🔐 Настройки ключей и доступа ===
 OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
-OWNER_ID = int(os.environ.get("OWNER_ID", "123456789"))
+OWNER_ID = int(os.environ.get("OWNER_ID", "178564204"))
 ALLOWED_USERS = [OWNER_ID]
 
 client = OpenAI(api_key=OPENAI_API_KEY)
