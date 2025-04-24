@@ -77,7 +77,27 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("🧹 Список очищен.")
         return
 
-    prompt = f"Ты — помощник по покупкам. Пользователь написал: \"{user_text}\". Выдели список покупок через запятую, без пояснений."
+    prompt keywords = ["купи", "нужно", "добавь", "в список", "надо", "приобрести"]
+
+if any(word in user_text for word in keywords):
+    prompt = f"""Ты — помощник по покупкам. Пользователь написал: \"{user_text}\". 
+    Выдели список покупок через запятую, без пояснений."""
+
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=100
+        )
+        items = response.choices[0].message.content.strip().split(",")
+        items = [item.strip() for item in items if item.strip()]
+        shopping_list.extend(items)
+
+        await update.message.reply_text("✅ Добавлено:\n" + "\n".join(f"• {item}" for item in items))
+    except Exception as e:
+        await update.message.reply_text(f"⚠️ Ошибка от OpenAI:\n{e}")
+else:
+    await update.message.reply_text("🤖 Не распознано как список покупок. Скажи, что нужно купить.")
 
     try:
         response = client.chat.completions.create(
