@@ -77,7 +77,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("🧹 Список очищен.")
         return
 
-   keywords = ["купи", "нужно", "добавь", "в список", "надо", "приобрести"]
+keywords = ["купи", "нужно", "добавь", "в список", "надо", "приобрести"]
 
 if any(word in user_text for word in keywords):
     prompt = f"""Ты — помощник по покупкам. Пользователь написал: \"{user_text}\". 
