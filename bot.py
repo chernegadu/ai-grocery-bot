@@ -3,7 +3,7 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 from openai import OpenAI
 
-# === 🔐 Настройки ключей и доступа ===
+# === Настройки ключей и доступа ===
 OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 OWNER_ID = int(os.environ.get("OWNER_ID", "178564204"))
@@ -12,14 +12,14 @@ ALLOWED_USERS = [OWNER_ID]
 client = OpenAI(api_key=OPENAI_API_KEY)
 shopping_list = []
 
-# === 🌌 Команда /start ===
+# ===  Команда /start ===
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ALLOWED_USERS:
         await update.message.reply_text("\u26d4\ufe0f Доступ запрещён.")
         return
     await update.message.reply_text("Привет! Напиши, что нужно купить — я запомню.")
 
-# === 🔑 Команда /add_user <id> ===
+# ===  Команда /add_user <id> ===
 async def add_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id != OWNER_ID:
         await update.message.reply_text("\u26d4\ufe0f Только владелец может добавлять пользователей.")
@@ -39,7 +39,7 @@ async def add_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except ValueError:
         await update.message.reply_text("\u274c Неверный формат ID. Введите число.")
 
-# === 🧠 Обработка сообщений ===
+# ===  Обработка сообщений ===
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ALLOWED_USERS:
         await update.message.reply_text("\u26d4\ufe0f Доступ запрещён.")
@@ -87,7 +87,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         await update.message.reply_text("\ud83e\udde0 Не распознано как список покупок. Скажи, что нужно купить.")
 
-# === 🚀 Запуск бота ===
+# ===  Запуск бота ===
 app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("add_user", add_user))
