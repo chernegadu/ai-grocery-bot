@@ -85,7 +85,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except Exception as e:
             await update.message.reply_text(f"\u26a0\ufe0f Ошибка от OpenAI:\n{e}")
     else:
-        await update.message.reply_text("\ud83e\udde0 Не распознано как список покупок. Скажи, что нужно купить.")
+        await update.message.reply_text("Не распознано как список покупок. Скажи, что нужно купить.")
 
 # ===  Запуск бота ===
 app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
